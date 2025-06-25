@@ -80,14 +80,25 @@ app.post('/api/homepage', async (req: Request, res: Response) => {
   const { title, subtitle, about, phonenumber, email, images } = req.body;
 
   try {
-    await pool.query(
-      'UPDATE homepage_content SET title = $1, subtitle = $2, about = $3, phonenumber = $4, email = $5, images = $6',
-      [title, subtitle, about, phonenumber, email, images]
-    );
+    console.log('Received homepage content:', req.body);
+
+    const existing = await pool.query('SELECT id FROM homepage_content WHERE id = 1');
+    if (existing.rows.length > 0) {
+      await pool.query(
+        'UPDATE homepage_content SET title = $1, subtitle = $2, about = $3, phonenumber = $4, email = $5, gallery_urls = $6 WHERE id = 1',
+        [title, subtitle, about, phonenumber, email, images]
+      );
+    } else {
+      await pool.query(
+        'INSERT INTO homepage_content (id, title, subtitle, about, phonenumber, email, gallery_urls) VALUES (1, $1, $2, $3, $4, $5, $6)',
+        [title, subtitle, about, phonenumber, email, images]
+      );
+    }
 
     res.status(200).send('Homepage content updated');
   } catch (err) {
-    console.error('Failed to update homepage data:', err);
+    console.error('Failed to update homepage data:', (err as Error).message);
+    console.error('Full error:', err);
     res.status(500).send('Error saving homepage content');
   }
 });
