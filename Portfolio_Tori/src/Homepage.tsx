@@ -11,12 +11,8 @@ export default function HomePage() {
   const API_BASE_URL = import.meta.env.PROD
   ? import.meta.env.VITE_API_BASE_URL_PRODUCTION
   : import.meta.env.VITE_API_BASE_URL_DEV;
-  console.log('made it here')
-  console.log(import.meta.env.PROD)
-  console.log('Api URL is'+import.meta.env.VITE_API_BASE_URL_DEV)
-  console.log('Api URL'+API_BASE_URL)
   useEffect(() => {
-    axios.get(`https://tori-backend.onrender.com/api/homepage`)
+    axios.get(`${API_BASE_URL}api/homepage`)
       .then(res => {
          console.log('API Response:', res.data);
         const { title, subtitle, about, phonenumber, email, images } = res.data;

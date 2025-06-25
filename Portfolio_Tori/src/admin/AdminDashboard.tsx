@@ -29,7 +29,7 @@ export default function AdminDashboard() {
     useEffect(() => {
     const fetchImages = async () => {
         try {
-            const res = await fetch(`${API_BASE_URL}/api/images`);
+            const res = await fetch(`${API_BASE_URL}api/images`);
             const data = await res.json();
             setImages(data);
         } catch (err) {
@@ -42,7 +42,7 @@ export default function AdminDashboard() {
 
  const handleSave = async () => {
   try {
-    await axios.post(`${API_BASE_URL}/api/homepage`, {
+    await axios.post(`${API_BASE_URL}api/homepage`, {
       title,
       subtitle,
       about,
@@ -62,11 +62,11 @@ export default function AdminDashboard() {
             Array.from(e.target.files).forEach(file => formData.append('images', file));
 
             try {
-                await fetch(`${API_BASE_URL}/api/upload`, {
+                await fetch(`${API_BASE_URL}api/upload`, {
                     method: 'POST',
                     body: formData,
                 });
-                const res = await fetch(`${API_BASE_URL}/api/images`);
+                const res = await fetch(`${API_BASE_URL}api/images`);
                 setImages(await res.json());
             } catch (err) {
                 alert('Upload failed. Check server');
@@ -89,13 +89,13 @@ export default function AdminDashboard() {
 
   const confirmDeletion = async () => {
     try {
-        await fetch(`${API_BASE_URL}/api/delete`, {
+        await fetch(`${API_BASE_URL}api/delete`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ images: Array.from(selectedForDeletion) }),
         });
 
-        const res = await fetch(`${API_BASE_URL}/api/images`);
+        const res = await fetch(`${API_BASE_URL}api/images`);
         setImages(await res.json());
 
         setSelectedForDeletion(new Set());
