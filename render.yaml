@@ -1,0 +1,29 @@
+  - type: web
+    name: tori-backend
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: node server-dist/server.js
+    buildFilter:
+      paths:
+        - server.ts
+        - auth.ts
+        - package.json
+        - tsconfig.server.json
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ADMIN_PASSWORD
+        value: admin
+      - key: API_BASE_URL_DEV
+        value: http://localhost:3001
+      - key: API_BASE_URL_PRODUCTION
+        value: https://tori-backend.onrender.com
+    autoDeploy: true
+    region: oregon
+    branch: main
+    rootDir: Portfolio_Tori
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
