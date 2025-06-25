@@ -77,17 +77,18 @@ app.get('/api/homepage', async (_req: Request, res: Response) => {
 
 // POST homepage data to DB
 app.post('/api/homepage', async (req: Request, res: Response) => {
-  const { title, subtitle, about, phonenumber, email } = req.body;
-  try {
-    await pool.query(`
-      INSERT INTO homepage_content (title, subtitle, about, phone, email, gallery_urls)
-      VALUES ($1, $2, $3, $4, $5, $6)
-    `, [title, subtitle, about, phonenumber, email, []]);
+  const { title, subtitle, about, phonenumber, email, images } = req.body;
 
-    res.status(200).send('Homepage content saved to database');
+  try {
+    await pool.query(
+      'UPDATE homepage_data SET title = $1, subtitle = $2, about = $3, phonenumber = $4, email = $5, images = $6',
+      [title, subtitle, about, phonenumber, email, images]
+    );
+
+    res.status(200).send('Homepage content updated');
   } catch (err) {
-    console.error('Failed to insert homepage content:', err);
-    res.status(500).send('Database insert failed');
+    console.error('Failed to update homepage data:', err);
+    res.status(500).send('Error saving homepage content');
   }
 });
 
