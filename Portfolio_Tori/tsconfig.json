@@ -8,6 +8,6 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["vite-env.d.ts","server.ts", "auth.ts"]
+  "include": ["vite-env.d.ts","server.ts", "auth.ts", "cloudinary.ts"]
 
 }
