@@ -85,12 +85,12 @@ app.post('/api/homepage', async (req: Request, res: Response) => {
     const existing = await pool.query('SELECT id FROM homepage_content WHERE id = 1');
     if (existing.rows.length > 0) {
       await pool.query(
-        'UPDATE homepage_content SET title = $1, subtitle = $2, about = $3, phonenumber = $4, email = $5, gallery_urls = $6 WHERE id = 1',
+        'UPDATE homepage_content SET title = $1, subtitle = $2, about = $3, phone = $4, email = $5, gallery_urls = $6 WHERE id = 1',
         [title, subtitle, about, phonenumber, email, images]
       );
     } else {
       await pool.query(
-        'INSERT INTO homepage_content (id, title, subtitle, about, phonenumber, email, gallery_urls) VALUES (1, $1, $2, $3, $4, $5, $6)',
+        'INSERT INTO homepage_content (id, title, subtitle, about, phone, email, gallery_urls) VALUES (1, $1, $2, $3, $4, $5, $6)',
         [title, subtitle, about, phonenumber, email, images]
       );
     }
