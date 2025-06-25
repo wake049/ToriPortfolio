@@ -9,7 +9,7 @@ const Login = () => {
   ? import.meta.env.VITE_API_BASE_URL_PRODUCTION
   : import.meta.env.VITE_API_BASE_URL_DEV;
   console.log('API base URL:', API_BASE_URL);
-
+  console.log(import.meta.env.VITE_API_BASE_URL_DEV)
   const handleLogin = async () => {
     try {
       const res = await fetch(`${API_BASE_URL}api/login`, {
@@ -46,6 +46,7 @@ const Login = () => {
           className="w-full px-4 py-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-pink-500"
         />
         <button
+        type="button"
           onClick={handleLogin}
           className="w-full bg-pink-600 text-white py-2 rounded hover:bg-pink-700 transition"
         >
