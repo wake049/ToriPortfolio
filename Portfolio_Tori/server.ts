@@ -81,7 +81,7 @@ app.post('/api/homepage', async (req: Request, res: Response) => {
 
   try {
     await pool.query(
-      'UPDATE homepage_data SET title = $1, subtitle = $2, about = $3, phonenumber = $4, email = $5, images = $6',
+      'UPDATE homepage_content SET title = $1, subtitle = $2, about = $3, phonenumber = $4, email = $5, images = $6',
       [title, subtitle, about, phonenumber, email, images]
     );
 
