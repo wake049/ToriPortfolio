@@ -47,7 +47,8 @@ export default function AdminDashboard() {
       subtitle,
       about,
       phonenumber,
-      email
+      email,
+       images,
     });
     alert('Changes saved!');
   } catch (err) {
@@ -57,22 +58,24 @@ export default function AdminDashboard() {
   
 
     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            const formData = new FormData();
-            Array.from(e.target.files).forEach(file => formData.append('images', file));
+  if (e.target.files) {
+    const formData = new FormData();
+    Array.from(e.target.files).forEach(file => formData.append('images', file));
 
-            try {
-                await fetch(`${API_BASE_URL}api/upload`, {
-                    method: 'POST',
-                    body: formData,
-                });
-                const res = await fetch(`${API_BASE_URL}api/images`);
-                setImages(await res.json());
-            } catch (err) {
-                alert('Upload failed. Check server');
-            }
-        }
-    };
+    try {
+      await fetch(`${API_BASE_URL}api/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const res = await fetch(`${API_BASE_URL}api/images`);
+      const newImages = await res.json();
+      setImages(newImages); // ✅ update state with latest images
+    } catch (err) {
+      alert('Upload failed. Check server');
+    }
+  }
+};
 
    const toggleImageSelection = (img: string) => {
     setSelectedForDeletion(prev => {
