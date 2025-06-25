@@ -50,13 +50,13 @@ export default function HomePage() {
         <div className="max-w-screen-xl mx-auto px-6">
           <h2 className="text-4xl font-semibold text-center mb-12 text-gray-800 tracking-tight">Gallery</h2>
          
-            <div className="grid gap-8 grid-cols-[repeat(auto-fit,minmax(500px,1fr))]">
+            <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {images.map((img, i) => (
                 <div key={i} className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition">
                   <img
                     src={img}
                     alt={`Style ${i + 1}`}
-                    className="rounded-xl w-full object-cover max-h-[1000px]"
+                    className="w-full max-w-full h-auto object-cover rounded-xl"
                     loading='lazy'
                   />
                 </div>
