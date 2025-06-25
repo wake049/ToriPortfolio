@@ -63,16 +63,14 @@ export default function AdminDashboard() {
     Array.from(e.target.files).forEach(file => formData.append('images', file));
 
     try {
-      await fetch(`${API_BASE_URL}api/upload`, {
+      const res = await fetch(`${API_BASE_URL}api/upload`, {
         method: 'POST',
         body: formData,
       });
-
-      const res = await fetch(`${API_BASE_URL}api/images`);
-      const newImages = await res.json();
-      setImages(newImages); // ✅ update state with latest images
+      const cloudinaryUrls = await res.json();
+      setImages(prev => [...prev, ...cloudinaryUrls]);
     } catch (err) {
-      alert('Upload failed. Check server');
+      alert('Upload failed.');
     }
   }
 };

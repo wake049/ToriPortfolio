@@ -5,6 +5,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { setupAuth } from './auth.js';
+import { storage } from './cloudinary';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -120,10 +121,11 @@ app.get('/api/images', (_req: Request, res: Response) => {
     res.json(imageUrls);
   });
 });
-
+const upload_images = multer({ storage });
 // POST image uploads
-app.post('/api/upload', upload.array('images'), (_req: Request, res: Response) => {
-  res.status(200).send('Images uploaded');
+app.post('/api/upload', upload_images.array('images'), (req: Request, res: Response) => {
+  const urls = (req.files as Express.Multer.File[]).map(file => (file as any).path);
+  res.status(200).json(urls);
 });
 
 // POST delete images
