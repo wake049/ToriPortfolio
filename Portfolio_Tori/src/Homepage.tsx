@@ -15,13 +15,13 @@ export default function HomePage() {
     axios.get(`${API_BASE_URL}api/homepage`)
       .then(res => {
          console.log('API Response:', res.data);
-        const { title, subtitle, about, phonenumber, email, images } = res.data;
+        const { title, subtitle, about, phonenumber, email, gallery_urls } = res.data;
         setTitle(title);
         setSubtitle(subtitle);
         setAbout(about);
         setPhoneNumber(phonenumber);
         setEmail(email);
-        setImages(images);
+        setImages(gallery_urls);
       })
       .catch(err => {
         console.error('Error fetching homepage data:', err);
