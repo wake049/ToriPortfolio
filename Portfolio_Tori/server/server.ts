@@ -4,13 +4,13 @@ import dotenv from 'dotenv';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
-import { setupAuth } from './src/auth.js';
-import { storage } from './src/cloudinary.js';
+import { setupAuth } from './auth.js';
+import { storage } from './cloudinary.js';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { Pool } from 'pg';
-import { v2 as cloudinary } from 'cloudinary';
+import { cloudinary } from './cloudinary';
 
 dotenv.config();
 console.log('Loaded password:', process.env.ADMIN_PASSWORD);
