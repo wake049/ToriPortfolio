@@ -5,7 +5,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { setupAuth } from './auth.js';
-import { storage, cloudinary } from '../Portfolio_Tori/cloudinary.js';
+import { storage, cloudinary } from './cloudinary.js';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
