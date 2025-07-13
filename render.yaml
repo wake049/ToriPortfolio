@@ -22,4 +22,4 @@ services:
         value: https://tori-backend.onrender.com
     autoDeploy: true
     region: oregon
-    branch: main
+    branch: master
