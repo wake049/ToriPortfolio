@@ -28,7 +28,7 @@ export default function AdminDashboard() {
 useEffect(() => {
   const fetchImages = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/images`);
+      const res = await fetch(`${API_BASE_URL}api/images`);
       const data = await res.json();
       setImages(data);
     } catch (err) {
