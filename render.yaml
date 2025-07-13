@@ -4,7 +4,7 @@ services:
     env: node
     plan: free
     rootDir: Portfolio_Tori
-    buildCommand: npm install && npm run build
+    buildCommand: chmod +x build.sh && ./build.sh
     startCommand: node --enable-source-maps server-dist/server.js
     buildFilter:
       paths:
