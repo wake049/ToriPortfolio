@@ -5,10 +5,12 @@ services:
     plan: free
     rootDir: Portfolio_Tori
     buildCommand: npm install && npm run build
-    startCommand: node server-dist/server.js
+    startCommand: node --enable-source-maps server-dist/server.js
     buildFilter:
       paths:
-        - server/**
+        - server.ts
+        - cloudinary.ts
+        - auth.ts
         - package.json
         - tsconfig.json
     envVars:
