@@ -1,10 +1,10 @@
   - type: web
-    name: tori-backend
-    env: node
-    plan: free
-    rootDir: Portfolio_Tori/server
-    buildCommand: npm install && npm run build
-    startCommand: node server/server-dist/server.js
+  name: tori-backend
+  env: node
+  plan: free
+  rootDir: Portfolio_Tori/server
+  buildCommand: npm install && npm run build
+  startCommand: node server-dist/server.js
     buildFilter:
       paths:
         - server.ts
@@ -23,7 +23,6 @@
     autoDeploy: true
     region: oregon
     branch: main
-    rootDir: Portfolio_Tori
     routes:
       - type: rewrite
         source: /*
