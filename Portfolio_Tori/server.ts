@@ -9,6 +9,7 @@ import { storage } from './cloudinary.js';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+// @ts-ignore
 import { Pool } from 'pg';
 // @ts-ignore
 import { cloudinary } from './cloudinary';
