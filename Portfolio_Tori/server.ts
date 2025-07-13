@@ -10,6 +10,7 @@ import { storage } from './cloudinary.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { Pool } from 'pg';
+// @ts-ignore
 import { cloudinary } from './cloudinary';
 
 dotenv.config();

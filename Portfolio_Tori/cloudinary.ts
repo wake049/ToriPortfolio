@@ -1,4 +1,6 @@
+// @ts-ignore
 import { v2 as cloudinary } from 'cloudinary';
+// @ts-ignore
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import dotenv from 'dotenv';
 dotenv.config();
