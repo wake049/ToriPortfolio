@@ -2,6 +2,7 @@
     name: tori-backend
     env: node
     plan: free
+    rootDir: server
     buildCommand: npm install && npm run build
     startCommand: node server-dist/server.js
     buildFilter:
