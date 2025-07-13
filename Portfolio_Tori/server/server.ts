@@ -4,12 +4,13 @@ import dotenv from 'dotenv';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
-import { setupAuth } from './auth.js';
-import { storage } from './cloudinary.js';
+import { setupAuth } from './src/auth.js';
+import { storage } from './src/cloudinary.js';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { Pool } from 'pg';
+import { v2 as cloudinary } from 'cloudinary';
 
 dotenv.config();
 console.log('Loaded password:', process.env.ADMIN_PASSWORD);
@@ -108,18 +109,20 @@ app.post('/api/homepage', async (req: Request, res: Response) => {
 const upload = multer({ dest: path.join(__dirname, 'uploads', 'styles') });
 
 // GET uploaded image URLs
-app.get('/api/images', (_req: Request, res: Response) => {
-  const dirPath = path.join(__dirname, 'uploads', 'styles');
+app.get('/api/images', async (_req: Request, res: Response) => {
+  try {
+    const result = await cloudinary.search
+      .expression('folder:portfolio_tori') // Use your actual folder
+      .sort_by('created_at', 'desc')
+      .max_results(100)
+      .execute();
 
-  fs.readdir(dirPath, (err, files) => {
-    if (err) {
-      console.error('Error reading styles directory:', err);
-      return res.status(500).send('Failed to read images');
-    }
-
-    const imageUrls = files.map(file => `${API_BASE_URL}/styles/${file}`);
-    res.json(imageUrls);
-  });
+    const urls = result.resources.map((file: any) => file.secure_url);
+    res.json(urls);
+  } catch (err) {
+    console.error('Cloudinary fetch failed:', err);
+    res.status(500).json({ error: 'Failed to fetch Cloudinary images' });
+  }
 });
 const upload_images = multer({ storage });
 // POST image uploads
@@ -129,19 +132,28 @@ app.post('/api/upload', upload_images.array('images'), (req: Request, res: Respo
 });
 
 // POST delete images
-app.post('/api/delete', (req: Request, res: Response) => {
+app.post('/api/delete', async (req: Request, res: Response) => {
   const { images } = req.body;
 
-  images.forEach((url: string) => {
-    const filename = path.basename(url);
-    const filePath = path.join(__dirname, 'uploads', 'styles', filename);
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-    }
-  });
-
-  res.status(200).send('Images deleted');
+  try {
+    const results = await Promise.all(
+      images.map((url: string) => {
+        const publicId = extractPublicId(url);
+        return cloudinary.uploader.destroy(`portfolio_tori/${publicId}`);
+      })
+    );
+    res.status(200).json({ success: true, results });
+  } catch (err) {
+    console.error('Cloudinary deletion failed:', err);
+    res.status(500).json({ error: 'Failed to delete images' });
+  }
 });
+
+function extractPublicId(url: string): string {
+  const parts = url.split('/');
+  const fileWithExt = parts[parts.length - 1];
+  return fileWithExt.split('.')[0]; // remove .jpg/.png
+}
 
 // Start server
 app.listen(PORT, () => {

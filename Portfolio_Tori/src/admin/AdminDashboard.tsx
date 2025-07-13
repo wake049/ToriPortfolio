@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { storage } from '../../cloudinary';
-import express from 'express';
 
 export default function AdminDashboard() {
   const [title, setTitle] = useState(() => localStorage.getItem('title') || 'Beauty By Tori Allen');
@@ -27,24 +25,19 @@ export default function AdminDashboard() {
         navigate('/login');
       }
     }, [navigate]);
-  const router = express.Router();
-  router.get('/api/images', async (req, res) => {
+useEffect(() => {
+  const fetchImages = async () => {
     try {
-    const result = await storage.search
-      .expression('folder:portfolio_tori')
-      .sort_by('created_at', 'desc')
-      .max_results(100)
-      .execute();
+      const res = await fetch(`${API_BASE_URL}/api/images`);
+      const data = await res.json();
+      setImages(data);
+    } catch (err) {
+      console.error('Failed to fetch images:', err);
+    }
+  };
 
-    console.log('Cloudinary result:', result); // Add this
-
-    const urls = result.resources.map((file: any) => file.secure_url);
-    res.json(urls);
-  } catch (err) {
-    console.error('Cloudinary fetch failed:', err);
-    res.status(500).json({ error: 'Failed to fetch images from Cloudinary' });
-  }
-});
+  fetchImages();
+}, []);
 
  const handleSave = async () => {
   try {
