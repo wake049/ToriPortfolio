@@ -10,7 +10,7 @@ services:
       paths:
         - server/**
         - package.json
-        - tsconfig.server.json
+        - tsconfig.json
     envVars:
       - key: NODE_ENV
         value: production
