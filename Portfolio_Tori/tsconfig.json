@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "server-dist",
+    "rootDir": ".",
     "target": "ES2020",
     "module": "ESNext",
     "moduleResolution": "node",
@@ -8,6 +9,9 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["vite-env.d.ts","server.ts", "auth.ts", "cloudinary.ts"]
-
+  "include": [
+    "server.ts",
+    "cloudinary.ts",
+    "auth.ts"
+  ]
 }
