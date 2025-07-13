@@ -11,7 +11,7 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node"]
+    "types": ["node", "pg"]
   },
   "include": [
     "server.ts",
