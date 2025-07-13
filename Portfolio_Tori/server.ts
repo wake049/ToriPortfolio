@@ -6,12 +6,13 @@ import path from 'path';
 import fs from 'fs';
 import { setupAuth } from './auth.js';
 import { storage } from './cloudinary.js';
+// @ts-ignore
+import { cloudinary } from './cloudinary';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { Pool } from 'pg';
-// @ts-ignore
-import { cloudinary } from './cloudinary';
+
 
 dotenv.config();
 console.log('Loaded password:', process.env.ADMIN_PASSWORD);
