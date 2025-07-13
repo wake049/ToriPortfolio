@@ -4,7 +4,7 @@
   plan: free
   rootDir: Portfolio_Tori/server
   buildCommand: npm install && npm run build
-  startCommand: node server/server-dist/server.js
+  startCommand: node server-dist/server.js
     buildFilter:
       paths:
         - server.ts
@@ -23,7 +23,3 @@
     autoDeploy: true
     region: oregon
     branch: main
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
